@@ -23,13 +23,13 @@ class Main extends Component {
     return (
       <div>
         <Row justify="center">
-          <Col span={6} style={{ textAlign: 'center' }}>
-            <GithubOutlined style={{ fontSize: '14rem' }} />
+          <Col span={24} md={6} style={{ textAlign: 'center' }}>
+            <GithubOutlined style={{ fontSize: '14rem', color: '#24292e' }} />
           </Col>
         </Row>
         <Divider orientation="center">GitHub API</Divider>
         <Row justify="center">
-          <Col span={6} style={{ textAlign: 'center' }}>
+          <Col span={24} md={6} style={{ textAlign: 'center' }}>
             <Form name="basic" onFinish={this.onFinish}>
               <Form.Item name="username">
                 <Input placeholder="GitHub Username" />
@@ -42,7 +42,7 @@ class Main extends Component {
         </Row>
 
         <Row justify="center" style={{marginTop: 20}}>
-          <Col span={6}>
+          <Col span={24} md={6}>
           {this.state.userName !== '' ? (
             <GHApi userName={this.state.userName} />
           ) : (
