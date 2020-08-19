@@ -83,7 +83,7 @@ class GHApi extends Component {
                 <BookOutlined />
                 <a
                   style={{ marginLeft: '8px' }}
-                  href={`https://github.com/saifulshihab/${repo.name}.git`}
+                  href={`https://github.com/${repo.owner.login}/${repo.name}.git`}
                 >
                   {repo.full_name}
                 </a>
