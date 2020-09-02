@@ -35,7 +35,7 @@ class GHApi extends Component {
         }
       })
       .catch((err) => {
-        message.error('Invalid username!');
+        message.error(err.message);
       });
   }
   showModal = () => {
