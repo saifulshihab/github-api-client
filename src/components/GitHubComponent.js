@@ -22,18 +22,21 @@ class GHApi extends Component {
       repoInfo: [],
     };
   }
-
+  api_url = `https://api.github.com/users/${this.props.userName}`;
   componentDidMount() {
+    const req = axios.get(this.api_url);
+    const req2 = axios.get(this.api_url + '/repos');
     axios
-      .get(`https://api.github.com/users/${this.props.userName}`)
-      .then((res) => {
-        if (res.data) {
+      .all([req, req2])
+      .then(
+        axios.spread((...res) => {
           this.setState({
-            userData: res.data,
+            userData: res[0].data,
+            repoInfo: res[1].data,
             dataload: true,
           });
-        }
-      })
+        })
+      )
       .catch((err) => {
         message.error(err.message);
       });
@@ -42,15 +45,6 @@ class GHApi extends Component {
     this.setState({
       isModalOpen: true,
     });
-    axios
-      .get(`https://api.github.com/users/${this.props.userName}/repos`)
-      .then((res) => {
-        if (res.data) {
-          this.setState({
-            repoInfo: res.data,
-          });
-        }
-      });
   };
   ReposData() {
     if (this.state.repoInfo.length !== 0) {
@@ -70,9 +64,8 @@ class GHApi extends Component {
           repo_lang_color = '#b07219';
         }
         return (
-          <div>
-            <Card
-              key={repo.id}
+          <div key={repo.id}>
+            <Card             
               style={{
                 width: '100%',
                 marginBottom: '10px',
