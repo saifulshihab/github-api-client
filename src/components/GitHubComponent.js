@@ -20,6 +20,7 @@ class GHApi extends Component {
       isModalOpen: false,
       dataload: false,
       repoInfo: [],
+      invalidUn: false,
     };
   }
   api_url = `https://api.github.com/users/${this.props.userName}`;
@@ -33,12 +34,19 @@ class GHApi extends Component {
           this.setState({
             userData: res[0].data,
             repoInfo: res[1].data,
-            dataload: true,
+            dataload: true            
           });
         })
       )
       .catch((err) => {
-        message.error(err.message);
+        this.setState({
+          invalidUn: true
+        })
+        if (err.response.status === 404) {
+          message.error('Invalid Username!');
+        } else {
+          message.error(err.message);
+        }
       });
   }
   showModal = () => {
@@ -65,7 +73,7 @@ class GHApi extends Component {
         }
         return (
           <div key={repo.id}>
-            <Card             
+            <Card
               style={{
                 width: '100%',
                 marginBottom: '10px',
@@ -202,11 +210,15 @@ class GHApi extends Component {
     } else {
       return (
         <div style={{ textAlign: 'center', padding: 50 }}>
-          <Card style={{ width: 300, margin: '0 auto' }}>
-            <Space style={{ paddingTop: 150, paddingBottom: 150 }}>
-              <Spin size="large"></Spin>
-            </Space>
-          </Card>
+          {this.state.invalidUn ? (
+            <div></div>
+          ) : (
+            <Card style={{ width: 300, margin: '0 auto' }}>
+              <Space style={{ paddingTop: 150, paddingBottom: 150 }}>
+                <Spin size="large"></Spin>
+              </Space>
+            </Card>
+          )}
         </div>
       );
     }
