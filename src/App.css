@@ -1,0 +1,51 @@
+body {
+  background-color: #1b262c;
+  color: #ddd;
+}
+.srcInput {
+  background: transparent;
+  text-align: center;
+  color: orangered;
+  border: 1px solid orangered;
+}
+.srcInput:active {
+  background: transparent;
+}
+.profile__card {
+  margin: 0 auto;
+  width: 100%;
+  background: transparent;
+  color: #ddd;
+  border: 1px solid #1890ff;
+}
+.ant-card-actions,
+.ant-card-meta-title,
+.ant-card-meta-description,
+.ant-modal-content,
+.ant-modal-body {
+  background: transparent;
+  color: #ddd;
+}
+.ant-card-actions {
+  border: none;
+}
+.ant-modal {
+  width: 100% !important;
+}
+.repo_card {
+  background: #1b262c;
+  color: #ddd;
+  border: 1px solid #1890ff;
+}
+.ant-modal-header {
+  background-color: #1b262c;
+  border: none;
+  color: #ddd !important;
+}
+.ant-modal-title {
+  color: #ddd;
+}
+.ant-modal-footer {
+  border: none;
+}
+ 

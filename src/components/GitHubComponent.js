@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Button, Card, Avatar, message, Modal, Spin, Space } from 'antd';
+import { Col, Button, Card, Avatar, message, Modal, Spin, Space } from 'antd';
 import {
   EyeOutlined,
   StarOutlined,
@@ -34,14 +34,14 @@ class GHApi extends Component {
           this.setState({
             userData: res[0].data,
             repoInfo: res[1].data,
-            dataload: true            
+            dataload: true,
           });
         })
       )
       .catch((err) => {
         this.setState({
-          invalidUn: true
-        })
+          invalidUn: true,
+        });
         if (err.response.status === 404) {
           message.error('Invalid Username!');
         } else {
@@ -72,52 +72,56 @@ class GHApi extends Component {
           repo_lang_color = '#b07219';
         }
         return (
-          <div key={repo.id}>
-            <Card
-              style={{
-                width: '100%',
-                marginBottom: '10px',
-                borderRadius: '6px',
-              }}
-            >
-              <p>
-                <BookOutlined />
-                <a
-                  style={{ marginLeft: '8px' }}
-                  href={`https://github.com/${repo.owner.login}/${repo.name}.git`}
-                >
-                  {repo.full_name}
-                </a>
-              </p>
-              <p>{repo.description}</p>
-              <p>
-                <div
-                  style={{
-                    width: '12px',
-                    height: '12px',
-                    borderRadius: '50%',
-                    display: 'inline-block',
-                    background: repo_lang_color,
-                  }}
-                ></div>
-                <span style={{ marginLeft: '7px', marginRight: '20px' }}>
-                  {repo.language}
-                </span>
-                <StarOutlined />
-                <span style={{ marginLeft: '7px', marginRight: '20px' }}>
-                  {repo.stargazers_count}
-                </span>
-                <DatabaseOutlined />
-                <span style={{ marginLeft: '7px', marginRight: '20px' }}>
-                  {repo.size}KB
-                </span>
-                <EyeOutlined />
-                <span style={{ marginLeft: '7px', marginRight: '20px' }}>
-                  {repo.watchers}
-                </span>
-              </p>
-            </Card>
-          </div>
+          <Col
+            style={{
+              display: 'inline-block',
+              padding: '2px',
+            }}
+            xs={24}
+            sm={12}
+            md={6}
+          >
+            <div key={repo.id}>
+              <Card className="repo_card">
+                <p>
+                  <BookOutlined />
+                  <a
+                    style={{ marginLeft: '8px' }}
+                    href={`https://github.com/${repo.owner.login}/${repo.name}.git`}
+                  >
+                    {repo.full_name}
+                  </a>
+                </p>
+                <p>{repo.description}</p>
+                <p>
+                  <div
+                    style={{
+                      width: '12px',
+                      height: '12px',
+                      borderRadius: '50%',
+                      display: 'inline-block',
+                      background: repo_lang_color,
+                    }}
+                  ></div>
+                  <span style={{ marginLeft: '7px', marginRight: '20px' }}>
+                    {repo.language}
+                  </span>
+                  <StarOutlined />
+                  <span style={{ marginLeft: '7px', marginRight: '20px' }}>
+                    {repo.stargazers_count}
+                  </span>
+                  <DatabaseOutlined />
+                  <span style={{ marginLeft: '7px', marginRight: '20px' }}>
+                    {repo.size}KB
+                  </span>
+                  <EyeOutlined />
+                  <span style={{ marginLeft: '7px', marginRight: '20px' }}>
+                    {repo.watchers}
+                  </span>
+                </p>
+              </Card>
+            </div>
+          </Col>
         );
       });
       return data;
@@ -146,12 +150,20 @@ class GHApi extends Component {
   render() {
     if (this.state.dataload) {
       return (
-        <div style={{ padding: 50 }}>
+        <div>
           <Card
-            style={{ width: 300, margin: '0 auto' }}
+            className="profile__card"
             cover={<img alt="example" src={this.state.userData.avatar_url} />}
             actions={[
-              <Button type="dashed" onClick={this.showModal}>
+              <Button
+                style={{
+                  background: 'transparent',
+                  borderColor: '#1890ff',
+                  color: '#1890ff',
+                }}
+                type="dashed"
+                onClick={this.showModal}
+              >
                 <EyeOutlined /> View Details
               </Button>,
             ]}
@@ -170,8 +182,14 @@ class GHApi extends Component {
             onCancel={this.handleCancel}
           >
             <Card
-              style={{ width: '100%' }}
-              cover={<img alt="example" src={this.state.userData.avatar_url} />}
+              className="profile__card"
+              cover={
+                <img
+                  style={{ width: '20%' }}
+                  alt="example"
+                  src={this.state.userData.avatar_url}
+                />
+              }
             >
               <Meta
                 avatar={<Avatar src={this.state.userData.avatar_url} />}
@@ -199,7 +217,7 @@ class GHApi extends Component {
                 </p>
                 <p>
                   <PaperClipOutlined style={{ marginRight: '6px' }} />{' '}
-                  {this.state.userData.blog}
+                  <a href={this.state.userData.blog}>{this.state.userData.blog}</a>
                 </p>
               </div>
               <div style={{ marginTop: 30 }}>{this.ReposData()}</div>
@@ -209,11 +227,11 @@ class GHApi extends Component {
       );
     } else {
       return (
-        <div style={{ textAlign: 'center', padding: 50 }}>
+        <div style={{ textAlign: 'center' }}>
           {this.state.invalidUn ? (
             <div></div>
           ) : (
-            <Card style={{ width: 300, margin: '0 auto' }}>
+            <Card className="profile__card">
               <Space style={{ paddingTop: 150, paddingBottom: 150 }}>
                 <Spin size="large"></Spin>
               </Space>
